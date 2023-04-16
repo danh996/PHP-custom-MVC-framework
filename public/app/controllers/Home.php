@@ -6,7 +6,6 @@ class Home extends Controller{
     }
 
     public function indexAction($name){
-        echo $name;
         $this->view->render('home/index');
     }
 }
