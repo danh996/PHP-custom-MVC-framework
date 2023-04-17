@@ -63,11 +63,10 @@ class Users extends Model{
     }
 
     public function logout(){
-        $user_agent = Session::uagent_no_version();
-        $this->_db->query("SELECT * FROM user_sessions WHERE user_id = ? AND user_agent = ?", [
-            $this->id,
-            $user_agent
-        ]);
+        $userSession = UserSession::getFromCookie();
+        if($userSession){
+            $userSession->delete();
+        }
         Session::delete(CURRENT_USER_SESSION_NAME);
         if(Cookie::exists(REMEMBER_ME_COOKIE_NAME)){
             Cookie::delete(REMEMBER_ME_COOKIE_NAME);
@@ -77,15 +76,13 @@ class Users extends Model{
     }
 
     public static function loginUserFromCookie(){
-        $user_session_model = new UserSession;
-        $user_session = $user_session_model->findFirst([
-            'conditions' => "user_agent = ? AND session = ?",
-            'bind' => [Session::uagent_no_version(), Cookie::get(REMEMBER_ME_COOKIE_NAME)]
-        ]);
-        if($user_session->user_id != ''){
-            $user = new self((int)$user_session->user_id);
+        $userSession = UserSession::getFromCookie();
+        if($userSession->user_id != ''){
+            $user = new self((int)$userSession->user_id);
         }
-        $user->login();
+        if($user){
+            $user->login();
+        }
         return $user;
     }
 }
