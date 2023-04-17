@@ -23,7 +23,13 @@
 </head>
 
 <body>
-    <h1>Le Cong Danh FR</h1>
-    <?=$this->content('body')?>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <?=$this->content('body')?>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
