@@ -32,7 +32,7 @@ class DB{
             }
 
             if($this->_query->execute()){
-                $this->_query = $this->_query->fetchAll(PDO::FETCH_OBJ);
+                $this->_result = $this->_query->fetchAll(PDO::FETCH_OBJ);
 //                $this->_count = $this->_query->rowCount();
                 $this->_lastInsertID = $this->_dbo->lastInsertId();
             } else {
@@ -86,6 +86,26 @@ class DB{
             return true;
         }
         return false;
+    }
+
+    public function results(){
+        return $this->_result;
+    }
+
+    public function first(){
+        return (!empty($this->_result)) ? $this->_result[0] : [];
+    }
+
+    public function count(){
+        return $this->_count;
+    }
+
+    public function lastID(){
+        return $this->_lastInsertID;
+    }
+
+    public function get_columns($table){
+        return $this->query("SHOW COLUMNS FROM {$table}")->results();
     }
 
     public function error(){

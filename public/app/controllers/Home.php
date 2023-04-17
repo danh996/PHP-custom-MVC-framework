@@ -8,7 +8,7 @@ class Home extends Controller{
     public function indexAction(){
         $db = DB::getInstance();
 
-        $contactQ = $db->delete('contacts', 3);
+        $contactQ = $db->get_columns('contacts');
         dnd($contactQ);
 
         $sql = "SELECT * FROM contacts";
