@@ -8,8 +8,13 @@ class Home extends Controller{
     public function indexAction(){
         $db = DB::getInstance();
 
-        $contactQ = $db->get_columns('contacts');
-        dnd($contactQ);
+        $contact = $db->findFirst('contacts', [
+            'conditions' => [
+                'fname'=>'?'
+            ],
+            'bind'=> ['danh']
+        ]);
+        dnd($contact);
 
         $sql = "SELECT * FROM contacts";
         $contactsQ = $db->query($sql);

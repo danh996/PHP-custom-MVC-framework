@@ -20,7 +20,6 @@ class DB{
     }
 
     public function query($sql, $params=[]){
-
         $this->_error = false;
         if($this->_query = $this->_dbo->prepare($sql)){
             $x = 1;
@@ -106,6 +105,66 @@ class DB{
 
     public function get_columns($table){
         return $this->query("SHOW COLUMNS FROM {$table}")->results();
+    }
+
+    protected function _read($table, $params = []){
+        $conditionString = '';
+        $bind = [];
+        $order = '';
+        $limit = '';
+
+//        conditions
+        if(isset($params['conditions'])){
+            if(is_array($params['conditions'])){
+                foreach ($params['conditions'] as $key => $condition){
+                    $conditionString .= ' '. $key . ' = ' . $condition . ' AND ';
+                }
+                $conditionString = trim($conditionString);
+                $conditionString = rtrim($conditionString, ' AND ');
+            } else {
+                $conditionString = $params['conditions'];
+            }
+
+            if($conditionString != ''){
+                $conditionString = ' WHERE ' . $conditionString;
+            }
+        }
+
+//        bind
+        if(array_key_exists('bind', $params)){
+            $bind = $params['bind'];
+        }
+//        order
+        if(array_key_exists('order', $params)){
+            $order = ' ORDER BY ' . $params['order'];
+        }
+
+        if(array_key_exists('limit', $params)){
+            $order = ' LIMIT ' . $params['limit'];
+        }
+
+        $sql = "SELECT * FROM {$table}{$conditionString}{$order}{$limit}";
+        if($this->query($sql, $bind)){
+            if(!count($this->_result)){
+                return false;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+    public function find($table, $params=[]){
+        if($this->_read($table, $params)){
+            return $this->results();
+        }
+        return false;
+    }
+
+    public function findFirst($table, $params=[]){
+        if($this->_read($table, $params)){
+            return $this->first();
+        }
+        return false;
     }
 
     public function error(){
