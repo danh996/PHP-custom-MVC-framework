@@ -6,6 +6,15 @@ class Home extends Controller{
     }
 
     public function indexAction(){
+        $db = DB::getInstance();
+
+        $contactQ = $db->delete('contacts', 3);
+        dnd($contactQ);
+
+        $sql = "SELECT * FROM contacts";
+        $contactsQ = $db->query($sql);
         $this->view->render('home/index');
     }
+
+
 }
