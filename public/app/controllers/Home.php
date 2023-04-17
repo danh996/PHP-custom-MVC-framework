@@ -6,19 +6,7 @@ class Home extends Controller{
     }
 
     public function indexAction(){
-        $db = DB::getInstance();
-
-        $contact = $db->findFirst('contacts', [
-            'conditions' => [
-                'fname'=>'?'
-            ],
-            'bind'=> ['danh']
-        ]);
-        dnd($contact);
-
-        $sql = "SELECT * FROM contacts";
-        $contactsQ = $db->query($sql);
-        $this->view->render('home/index');
+        dnd($_SESSION);
     }
 
 

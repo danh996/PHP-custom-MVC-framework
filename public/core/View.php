@@ -1,6 +1,7 @@
 <?php
 class View{
     protected $_head, $_body, $_siteTitle = SITE_TITLE, $_outputBuffer, $_layout = DEFAULT_LAYOUT;
+    public $_displayErrors;
 
     public function __construct()
     {
@@ -53,6 +54,10 @@ class View{
 
     public function setLayout($path){
         $this->_layout=$path;
+    }
+
+    public function display_errors(){
+        return $this->_displayErrors;
     }
 
 }

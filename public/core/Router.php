@@ -19,4 +19,20 @@
                 die("This method is not exist in the controllers ". $controller_name);
             }
         }
+
+        public static function redirect($location){
+            if(!headers_sent()){
+                header('Location: '. PROOT.$location);
+                exit();
+            } else {
+                echo '<script type="text/javascript">';
+                echo 'windown.location.href="'.PROOT.$location.'";';
+                echo '</script>';
+                echo '<noscript>';
+                echo '<meta http-quiv="refresh" content="0; url ='.$location.'"/>';
+                echo '</noscript>';
+                exit;
+            }
+
+        }
     }

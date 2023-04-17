@@ -3,6 +3,7 @@
 
 <?php $this->start('body'); ?>
 <form action="<?=PROOT?>register/login" method="post">
+    <div class="bg-warning"><?=$this->display_errors()?></div>
     <div class="form-group">
         <label for="exampleInputEmail1">User name</label>
         <input type="text" class="form-control" name="username" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter user name">
