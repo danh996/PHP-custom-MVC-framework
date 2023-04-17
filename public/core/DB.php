@@ -7,6 +7,8 @@ class DB{
     {
         try{
             $this->_dbo = new PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASSWORD);
+            $this->_dbo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->_dbo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
         }catch (PDOException $e){
             die($e);
         }

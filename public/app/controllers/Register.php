@@ -23,7 +23,7 @@ class Register extends Controller {
             if($validation->passed()){
                 $user = $this->UsersModel->findByUsername($_POST['username']);
                 if($user && password_verify(Input::get('password'), $user->password)){
-                    $remember = (isset($_POST['remmeber_me']) && Input::get('remember_me')) ? true : false;
+                    $remember = (isset($_POST['remember_me']) && Input::get('remember_me')) ? true : false;
                     $user->login($remember);
                     Router::redirect('/');
                 }
@@ -41,6 +41,26 @@ class Register extends Controller {
             currentUser()->logout();
         }
         Router::redirect('register/login');
+    }
+
+    public function registerAction(){
+        $validation = new Validate();
+        $posted_values = ['username' => '', 'password' => ''];
+        if($_POST){
+            $posted_values = posted_values($_POST);
+            $validation->check($_POST, []);
+
+            if($validation->passed()){
+                $newUser = new Users();
+                $newUser->registerNewUser($_POST);
+                $newUser->login();
+                Router::redirect('');
+            }
+        }
+        $this->view->post = $posted_values;
+        $this->view->displayErrors = $validation->displayErrors();
+
+        $this->view->render('register/register');
     }
 
 }

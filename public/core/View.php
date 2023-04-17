@@ -1,7 +1,7 @@
 <?php
 class View{
     protected $_head, $_body, $_siteTitle = SITE_TITLE, $_outputBuffer, $_layout = DEFAULT_LAYOUT;
-    public $_displayErrors;
+    public $displayErrors;
 
     public function __construct()
     {
@@ -57,7 +57,7 @@ class View{
     }
 
     public function display_errors(){
-        return $this->_displayErrors;
+        return $this->displayErrors;
     }
 
 }
