@@ -1,4 +1,7 @@
 <?php
+namespace App\Models;
+use Core\Model;
+
 class Users extends Model{
     private $_isLoggedIn, $_sessionName, $_cookieName;
     public static $currentLoggedInUser = null;

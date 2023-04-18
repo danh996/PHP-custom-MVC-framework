@@ -1,4 +1,6 @@
 <?php
+namespace Core;
+use Core\Application;
 class Controller extends Application {
      protected $_controller, $_action;
      public $view;
@@ -12,8 +14,9 @@ class Controller extends Application {
     }
 
     protected function load_model($model){
-        if(class_exists($model)){
-            $this->{$model.'Model'} = new $model(strtolower($model));
+        $modelPath = 'App\Models\\'.$model;
+        if(class_exists($modelPath)){
+            $this->{$model.'Model'} = new $modelPath;
         }
     }
 }

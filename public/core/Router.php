@@ -1,4 +1,8 @@
 <?php
+namespace Core;
+use Core\Session;
+use App\Models\Users;
+
     class Router{
         public static function route($url){
             $controller =  (isset($url[0]) && $url[0] != '') ? ucfirst($url[0]) : DEFAULT_CONTROLLER;
@@ -20,6 +24,7 @@
 
 //    param
             $queryParams = $url;
+            $controller = 'App\Controllers\\' . $controller;
             $dispatch = new $controller($controller_name, $action);
             if(method_exists($controller, $action)){
                 call_user_func_array([$dispatch, $action], $queryParams);
