@@ -60,4 +60,12 @@ class View{
         return $this->displayErrors;
     }
 
+    public function insert($path){
+        include ROOT . DS . 'app' . DS . 'views' . DS . $path . '.php';
+    }
+
+    public function partial($group, $partial){
+        include ROOT . DS . 'app' . DS . 'views' . DS . $group . 'partials' . DS . $partial . '.php';
+    }
+
 }
