@@ -91,4 +91,11 @@ class Users extends Model{
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
         $this->save();
     }
+
+    public function acls(){
+        if(empty($this->acls)){
+            return [];
+        }
+        return json_decode($this->acls, true);
+    }
 }

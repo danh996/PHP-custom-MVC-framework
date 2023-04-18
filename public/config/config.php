@@ -15,3 +15,5 @@ define('SITE_TITLE', 'My MCV FRAMEWORK');
 define('CURRENT_USER_SESSION_NAME', 'leconfdanh');
 define('REMEMBER_ME_COOKIE_NAME', '887455dfaseqweqdasd');
 define('REMEMBER_ME_COOKIE_EXPIRY', 365);
+
+define('ACCESS_RESTRICTED', 'Restricted');
