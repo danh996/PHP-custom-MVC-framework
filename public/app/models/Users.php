@@ -2,7 +2,7 @@
 class Users extends Model{
     private $_isLoggedIn, $_sessionName, $_cookieName;
     public static $currentLoggedInUser = null;
-
+    public $id, $username, $password;
     public function __construct($user = '')
     {
         $table = 'users';

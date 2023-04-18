@@ -21,3 +21,7 @@ function posted_values($post){
     }
     return $clean_ary;
 }
+
+function getObjectProperties($obj){
+    return get_object_vars($obj);
+}
