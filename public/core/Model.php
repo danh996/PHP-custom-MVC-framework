@@ -25,6 +25,7 @@ class Model{
     }
 
     public function find($params = []){
+        $params = $this->_softDeleteParams($params);
         $results = [];
         $resultsQuery = $this->_db->find($this->_table, $params);
         foreach ($resultsQuery as $result){
@@ -36,6 +37,7 @@ class Model{
     }
 
     public function findFirst($params = []){
+        $params = $this->_softDeleteParams($params);
         $resultQuery = $this->_db->findFirst($this->_table, $params);
         $result = new $this->_modelName($this->_table);
         if($resultQuery){
@@ -113,5 +115,20 @@ class Model{
         foreach ($result as $key => $val){
             $this->$key = $val;
         }
+    }
+
+    protected function _softDeleteParams($params){
+        if($this->_softDelete){
+            if(array_key_exists('conditions', $params)){
+                if(is_array($params['conditions'])){
+                    $params['conditions'][] = "deleted != 1";
+                } else {
+                    $params['conditions'] .= " AND deleted != 1";
+                }
+            }else{
+                $params['conditions'] = "deleted != 1";
+            }
+        }
+        return $params;
     }
 }
